@@ -1,5 +1,5 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
 require('./bootstrap/bootstrap')(app);
 require('./bootstrap/routes')(app);

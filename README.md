@@ -1,1 +1,1 @@
-# node-express-boilerplate
+# ES6 NodeJs with Express server
