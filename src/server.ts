@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
+import routes from "./routes";
 
 interface ResponseError extends Error {
   status?: number;
@@ -12,19 +13,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get("/", (req: Request, res: Response) => {
-  res.json({
-    status: "App running",
-    timestamp: Date.now(),
-  });
-});
-
-app.get("/users", (req: Request, res: Response) => {
-  res.json({
-    status: "Users page running",
-    timestamp: Date.now(),
-  });
-});
+app.use("/", routes);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
