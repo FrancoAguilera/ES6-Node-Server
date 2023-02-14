@@ -2,9 +2,9 @@ import { Router } from "express";
 
 const router = Router();
 
-import homeRoutes from "./home.routes";
-import usersRoutes from "./users.routes";
-import errorRoutes from "./errors.routes";
+import homeRoutes from "./home";
+import usersRoutes from "./users";
+import errorRoutes from "./errors";
 
 router.use("/", homeRoutes);
 router.use("/users", usersRoutes);

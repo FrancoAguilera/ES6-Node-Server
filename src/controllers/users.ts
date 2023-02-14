@@ -1,5 +1,20 @@
 import { Request, Response } from "express";
-import { Users } from "../models/users.model";
+import { Users } from "../models/users";
+
+const getParams = (req: Request) => {
+  const { name, email, gender, bio, dob, picture, rank, isActive } = req.body;
+
+  return {
+    name,
+    email,
+    gender,
+    bio,
+    dob,
+    picture,
+    rank,
+    isActive,
+  };
+};
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -7,7 +22,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
     res.json({
       status: 200,
-      users,
+      body: users,
     });
   } catch (err) {
     res.json({
@@ -23,7 +38,7 @@ export const getUser = async (req: Request, res: Response) => {
 
     res.json({
       status: 200,
-      user,
+      body: user,
     });
   } catch (err) {
     res.json({
@@ -34,25 +49,12 @@ export const getUser = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const { name, email, gender, bio, dob, picture, rank, isActive } = req.body;
-
-    const newUser = {
-      name,
-      email,
-      gender,
-      bio,
-      dob,
-      picture,
-      rank,
-      isActive,
-    };
-
-    await Users.create(newUser);
+    const newUser = getParams(req);
+    const user = await Users.create(newUser);
 
     res.json({
       status: "User created Succesfully",
-      body: newUser,
-      timestamp: Date.now(),
+      body: user,
     });
   } catch (err) {
     res.json({
@@ -65,24 +67,13 @@ export const updateUser = async (req: Request, res: Response) => {
   try {
     const { _id } = req.params;
     const user = await Users.findById({ _id });
-    const { name, email, gender, bio, dob, picture, rank, isActive } = req.body;
-
-    const updateUser = {
-      name,
-      email,
-      gender,
-      bio,
-      dob,
-      picture,
-      rank,
-      isActive,
-    };
+    const updateUser = getParams(req);
 
     if (user) {
-      await user.update(updateUser);
+      const updatedUser = await user.update(updateUser);
       res.json({
         status: 200,
-        updateUser,
+        body: updatedUser,
       });
     } else {
       throw new Error("User not found");
@@ -100,7 +91,9 @@ export const deleteUser = async (req: Request, res: Response) => {
     await Users.deleteOne({ _id });
     res.json({
       status: 200,
-      messagge: "User deleted successfully.",
+      body: {
+        messagge: "User deleted successfully.",
+      },
     });
   } catch (err) {
     res.json({
