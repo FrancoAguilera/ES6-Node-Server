@@ -12,7 +12,7 @@
     "debug": "^3.1.0",
     "dotenv": "^16.0.3",
     "express": "^4.16.1",
-    "mongoose": "^6.9.1",
+    "mongoose": "^6.12.0",
     "morgan": "^1.9.0"
   },
   "devDependencies": {
