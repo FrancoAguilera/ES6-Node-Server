@@ -1,5 +1,5 @@
-import * as dotenv from "dotenv";
-dotenv.config();
+const { loadEnvFile } = require('node:process');
+loadEnvFile();
 
 import app from "./server";
 import { connectDB } from "./db/connection";

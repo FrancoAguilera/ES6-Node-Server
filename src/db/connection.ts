@@ -7,7 +7,7 @@ const DB_CONNECTION: string = process.env.DB_CONNECTION || "";
 export const connectDB = async function () {
   try {
     await mongoose.connect(DB_CONNECTION);
-    console.info(">>> DB Connection OK");
+    console.info(`>>> DB Connection OK - ${new Date().getTime()}`);
   } catch (error) {
     console.error(error);
     throw new Error(">>> DB Connection Failed");

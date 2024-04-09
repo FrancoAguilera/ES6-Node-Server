@@ -1,33 +1,12 @@
 import { Request, Response } from "express";
 import { Users } from "../models/users";
 
-const getParams = (req: Request) => {
-  const { name, email, gender, bio, dob, picture, rank, isActive } = req.body;
-
-  return {
-    name,
-    email,
-    gender,
-    bio,
-    dob,
-    picture,
-    rank,
-    isActive,
-  };
-};
-
 export const getUsers = async (req: Request, res: Response) => {
   try {
     const users = await Users.find();
-
-    res.json({
-      status: 200,
-      body: users,
-    });
+    res.json({ status: 200, body: users,});
   } catch (err) {
-    res.json({
-      error: err,
-    });
+    res.json({ error: err });
   }
 };
 
@@ -49,8 +28,7 @@ export const getUser = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const newUser = getParams(req);
-    const user = await Users.create(newUser);
+    const user = await Users.create(req.body);
 
     res.json({
       status: "User created Succesfully",
@@ -67,10 +45,9 @@ export const updateUser = async (req: Request, res: Response) => {
   try {
     const { _id } = req.params;
     const user = await Users.findById({ _id });
-    const updateUser = getParams(req);
 
     if (user) {
-      const updatedUser = await user.update(updateUser);
+      const updatedUser = await user.update(req.body);
       res.json({
         status: 200,
         body: updatedUser,
