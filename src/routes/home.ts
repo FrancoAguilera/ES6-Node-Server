@@ -4,7 +4,7 @@ const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
   res.json({
-    status: "App runningo",
+    status: "App running",
     timestamp: Date.now(),
   });
 });
